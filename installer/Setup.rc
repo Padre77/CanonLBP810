@@ -1,0 +1,25 @@
+1 24 "installer\\setup.manifest"
+101 RCDATA "artifacts\\payload.zip"
+102 RCDATA "installer\\Bootstrap.ps1"
+1 VERSIONINFO
+FILEVERSION 0,2,0,0
+PRODUCTVERSION 0,2,0,0
+FILEOS 0x40004
+FILETYPE 1
+BEGIN
+ BLOCK "StringFileInfo"
+ BEGIN
+  BLOCK "040904b0"
+  BEGIN
+   VALUE "CompanyName", "LBP-810 Native Community Project\0"
+   VALUE "FileDescription", "Canon LBP-810 Native Community Driver Setup\0"
+   VALUE "FileVersion", "0.2.0\0"
+   VALUE "ProductName", "LBP-810 Native\0"
+   VALUE "ProductVersion", "0.2.0\0"
+  END
+ END
+ BLOCK "VarFileInfo"
+ BEGIN
+  VALUE "Translation", 0x409, 1200
+ END
+END

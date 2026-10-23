@@ -1,0 +1,104 @@
+*% SPDX-License-Identifier: GPL-2.0-or-later
+*% Experimental Unidrv raster minidriver. Output goes to the local CAPT bridge.
+*GPDFileVersion: "1.1"
+*GPDSpecVersion: "1.0"
+*GPDFileName: "LBP810.GPD"
+*Include: "STDNAMES.GPD"
+*ModelName: "Canon LBP-810 Native"
+*MasterUnits: PAIR(600, 600)
+*ResourceDLL: "unires.dll"
+*PrinterType: PAGE
+*MaxCopies: 1
+*PrintRate: 8
+*PrintRateUnit: PPM
+*PrintRatePPM: 8
+*TextCaps: LIST(TC_RA_ABLE)
+*XMoveUnit: 600
+*YMoveUnit: 600
+*RasterSendAllData?: TRUE
+*OutputDataFormat: H_BYTE
+*OptimizeLeftBound?: FALSE
+*PreAnalysisOptions: 0
+*CursorXAfterSendBlockData: AT_CURSOR_X_ORIGIN
+*CursorYAfterSendBlockData: AUTO_INCREMENT
+*Feature: Orientation
+{
+    *Name: "Orientation"
+    *DefaultOption: PORTRAIT
+    *Option: PORTRAIT { *Name: "Portrait" }
+    *% Software rotation: USB/CAPT continues to receive portrait-coordinate raster.
+    *Option: LANDSCAPE_CC270 { *Name: "Landscape" }
+}
+*Feature: PaperSize
+{
+    *Name: "Paper size"
+    *DefaultOption: A4
+    *Option: A4
+    {
+        *Name: "A4"
+        *PrintableArea: PAIR(4736, 6736)
+        *PrintableOrigin: PAIR(112, 112)
+        *CursorOrigin: PAIR(112, 112)
+    }
+}
+*Feature: InputBin
+{
+    *Name: "Paper source"
+    *DefaultOption: AUTO
+    *Option: AUTO { *Name: "Automatic" }
+}
+*Feature: Resolution
+{
+    *Name: "Resolution"
+    *DefaultOption: DPI600
+    *Option: DPI600
+    {
+        *Name: "600 dpi"
+        *DPI: PAIR(600, 600)
+        *TextDPI: PAIR(600, 600)
+        *SpotDiameter: 100
+        *PinsPerPhysPass: 1
+        *PinsPerLogPass: 1
+        *Command: CmdBeginRaster { *Cmd: "" }
+        *Command: CmdEndRaster { *Cmd: "" }
+        *Command: CmdSendBlockData { *Cmd: "D " %d{NumOfDataBytes} "<0A>" }
+    }
+}
+*Feature: ColorMode
+{
+    *Name: "Color mode"
+    *DefaultOption: Mono
+    *Option: Mono
+    {
+        *Name: "Monochrome"
+        *DevNumOfPlanes: 1
+        *DevBPP: 1
+        *DrvBPP: 1
+        *Color?: FALSE
+    }
+}
+*Command: CmdStartDoc
+{
+    *Order: DOC_SETUP.1
+    *Cmd: "J<0A>"
+}
+*Command: CmdStartPage
+{
+    *Order: PAGE_SETUP.1
+    *Cmd: "P<0A>"
+}
+*Command: CmdEndDoc
+{
+    *Order: DOC_FINISH.1
+    *Cmd: "Q<0A>"
+}
+*Command: CmdEndPage
+{
+    *Order: PAGE_FINISH.1
+    *Cmd: "E<0A>"
+}
+*Command: CmdXMoveAbsolute { *Cmd: "X " %d{DestX} "<0A>" }
+*Command: CmdYMoveAbsolute { *Cmd: "Y " %d{DestY} "<0A>" }
+*Command: CmdCR { *Cmd: "X 0<0A>" }
+*Command: CmdLF { *Cmd: "L<0A>" }
+*Command: CmdFF { *Cmd: "" }
